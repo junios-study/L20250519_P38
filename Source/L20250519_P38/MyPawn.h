@@ -6,6 +6,16 @@
 #include "GameFramework/Pawn.h"
 #include "MyPawn.generated.h"
 
+
+class UBoxComponent;
+class UStaticMeshComponent;
+class USpringArmComponent;
+class UCameraComponent;
+class UFloatingPawnMovement;
+class UArrowComponent;
+
+
+
 UCLASS()
 class L20250519_P38_API AMyPawn : public APawn
 {
@@ -26,4 +36,34 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	UPROPERTY(VisibleAnywhere, Category = "Components", BlueprintReadOnly)
+	TObjectPtr<UBoxComponent> Box;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components", BlueprintReadOnly)
+	TObjectPtr<UStaticMeshComponent> Body;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components", BlueprintReadOnly)
+	TObjectPtr<UStaticMeshComponent> Left;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components", BlueprintReadOnly)
+	TObjectPtr<UStaticMeshComponent> Right;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components", BlueprintReadOnly)
+	TObjectPtr<USpringArmComponent> SpringArm;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components", BlueprintReadOnly)
+	TObjectPtr<UArrowComponent> Arrow;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components", BlueprintReadOnly)
+	TObjectPtr<UCameraComponent> Camera;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components", BlueprintReadOnly)
+	TObjectPtr<UFloatingPawnMovement> Movement;
+
+	UPROPERTY(EditAnywhere, Category = "Data", BlueprintReadWrite)
+	float MoveSpeed;
+
+	UPROPERTY(EditAnywhere, Category = "Data", BlueprintReadWrite)
+	float RotateSpeed;
+ 
 };
