@@ -3,12 +3,13 @@
 	"EngineAssociation": "5.5",
 	"Category": "",
 	"Description": "",
-	"Plugins": [
+	"Modules": [
 		{
-			"Name": "ModelingToolsEditorMode",
-			"Enabled": true,
-			"TargetAllowList": [
-				"Editor"
+			"Name": "L20250519_P38",
+			"Type": "Runtime",
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"Engine"
 			]
 		}
 	]
