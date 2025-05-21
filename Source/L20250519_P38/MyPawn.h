@@ -61,12 +61,12 @@ public:
 	TObjectPtr<UFloatingPawnMovement> Movement;
 
 	UPROPERTY(EditAnywhere, Category = "Data", BlueprintReadWrite)
-	float MoveSpeed;
+	float MoveSpeed = 10.0f;
 
 	UPROPERTY(EditAnywhere, Category = "Data", BlueprintReadWrite)
-	float RotateSpeed;
+	float RotateSpeed = 60.f;
 
 	UPROPERTY(EditAnywhere, Category = "Data", BlueprintReadWrite)
-	float Boost;
+	float Boost = 0.5f;
  
 };

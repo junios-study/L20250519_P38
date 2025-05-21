@@ -14,7 +14,7 @@
 // Sets default values
 AMyPawn::AMyPawn()
 {
- 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 	Box = CreateDefaultSubobject<UBoxComponent>(TEXT("Box"));
@@ -23,7 +23,7 @@ AMyPawn::AMyPawn()
 	Body = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Body"));
 	Body->SetupAttachment(Box);
 
-//	static 그래픽자료형 변수(TEXT("경로"));
+	//	static 그래픽자료형 변수(TEXT("경로"));
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> SM_Body(TEXT("/Script/Engine.StaticMesh'/Game/P38/Meshes/SM_P38_Body.SM_P38_Body'"));
 	if (SM_Body.Succeeded())
 	{
@@ -49,9 +49,10 @@ AMyPawn::AMyPawn()
 
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
 	SpringArm->SetupAttachment(Box);
-	SpringArm->TargetArmLength = 120.0f;
+	SpringArm->TargetArmLength = 170.0f;
 	SpringArm->bEnableCameraLag = true;
 	SpringArm->bEnableCameraRotationLag = true;
+	SpringArm->SocketOffset = FVector(0, 0, 41.0f);
 
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	Camera->SetupAttachment(SpringArm);
@@ -61,19 +62,28 @@ AMyPawn::AMyPawn()
 
 	Movement = CreateDefaultSubobject<UFloatingPawnMovement>(TEXT("Movement"));
 
+	Boost = 0.5f;
+	MoveSpeed = 10.0f;
+	RotateSpeed = 60.0f;
+
+	Movement->MaxSpeed = MoveSpeed;
+
 }
 
 // Called when the game starts or when spawned
 void AMyPawn::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 }
+
 
 // Called every frame
 void AMyPawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	AddMovementInput(GetActorForwardVector(), Boost);
 
 }
 
