@@ -65,5 +65,8 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Data", BlueprintReadWrite)
 	float RotateSpeed;
+
+	UPROPERTY(EditAnywhere, Category = "Data", BlueprintReadWrite)
+	float Boost;
  
 };

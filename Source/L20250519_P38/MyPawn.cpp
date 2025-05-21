@@ -23,14 +23,35 @@ AMyPawn::AMyPawn()
 	Body = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Body"));
 	Body->SetupAttachment(Box);
 
+//	static 그래픽자료형 변수(TEXT("경로"));
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> SM_Body(TEXT("/Script/Engine.StaticMesh'/Game/P38/Meshes/SM_P38_Body.SM_P38_Body'"));
+	if (SM_Body.Succeeded())
+	{
+		Body->SetStaticMesh(SM_Body.Object);
+	}
+
+
 	Left = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Left"));
 	Left->SetupAttachment(Body);
 
 	Right = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Right"));
 	Right->SetupAttachment(Body);
 
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> SM_Propeller(TEXT("/Script/Engine.StaticMesh'/Game/P38/Meshes/SM_P38_Propeller.SM_P38_Propeller'"));
+	if (SM_Propeller.Succeeded())
+	{
+		Left->SetStaticMesh(SM_Propeller.Object);
+		Right->SetStaticMesh(SM_Propeller.Object);
+	}
+
+	Left->SetRelativeLocation(FVector(37.571327f, -21.000000f, 1.328775f));
+	Right->SetRelativeLocation(FVector(37.571327f, 21.000000f, 1.328775f));
+
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
 	SpringArm->SetupAttachment(Box);
+	SpringArm->TargetArmLength = 120.0f;
+	SpringArm->bEnableCameraLag = true;
+	SpringArm->bEnableCameraRotationLag = true;
 
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	Camera->SetupAttachment(SpringArm);
