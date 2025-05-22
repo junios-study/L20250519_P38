@@ -42,4 +42,14 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void Test();
 
+	UFUNCTION()
+	void ProcessBeginOverlap(AActor* OverlappedActor, AActor* OtherActor);
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void CallCPPToExecuteBP(int Damage);
+
+	UFUNCTION(BlueprintNativeEvent)
+	void CallCPPToDefaultExecuteBP(int Damage);
+	void CallCPPToDefaultExecuteBP_Implementation(int Damage);
+
 };

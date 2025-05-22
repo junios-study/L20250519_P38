@@ -1,10 +1,11 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "MyActor.h"
 #include "Components/StaticMeshComponent.h"
 #include "Components/BoxComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 AMyActor::AMyActor()
@@ -38,7 +39,8 @@ void AMyActor::BeginPlay()
 	Super::BeginPlay();
 
 	SetLifeSpan(3.0f);
-	
+
+	OnActorBeginOverlap.AddDynamic(this, &AMyActor::ProcessBeginOverlap);
 }
 
 // Called every frame
@@ -51,5 +53,34 @@ void AMyActor::Tick(float DeltaTime)
 void AMyActor::Test()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Test"));
+}
+
+void AMyActor::ProcessBeginOverlap(AActor* OverlappedActor, AActor* OtherActor)
+{
+	if (OtherActor->ActorHasTag(TEXT("Player")))
+	{
+		return;
+	}
+
+	UE_LOG(LogTemp, Warning, TEXT("%s"), *OtherActor->GetName());
+
+	UGameplayStatics::ApplyDamage(OtherActor,
+		100.0f,
+		nullptr,
+		this,
+		UDamageType::StaticClass()
+	);
+
+	//상속된 블루프린트에 무슨 함수 있을꺼야. 그걸 기획자가 만들면 난 그걸 알아서 호출께
+	//CallCPPToExecuteBP(100);
+	CallCPPToDefaultExecuteBP(100);
+
+
+	Destroy();
+}
+
+void AMyActor::CallCPPToDefaultExecuteBP_Implementation(int Damage)
+{
+	UE_LOG(LogTemp, Warning, TEXT("이건 CPP 호출 %d"), Damage);
 }
 
