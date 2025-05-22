@@ -13,7 +13,7 @@ class USpringArmComponent;
 class UCameraComponent;
 class UFloatingPawnMovement;
 class UArrowComponent;
-
+class AMyActor;
 
 
 UCLASS()
@@ -35,6 +35,16 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	void Pitch(float Value);
+
+	void Roll(float Value);
+
+	void Fire();
+
+	void Doboost();
+
+	void Unboost();
 
 	UPROPERTY(VisibleAnywhere, Category = "Components", BlueprintReadOnly)
 	TObjectPtr<UBoxComponent> Box;
@@ -68,5 +78,8 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Data", BlueprintReadWrite)
 	float Boost = 0.5f;
+
+	UPROPERTY(EditAnywhere, Category = "Data", BlueprintReadWrite)
+	TSubclassOf<AMyActor> RocketTemplate;
  
 };

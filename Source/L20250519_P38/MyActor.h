@@ -13,7 +13,9 @@ class UStaticMeshComponent;
 UCLASS()
 class L20250519_P38_API AMyActor : public AActor
 {
+
 	GENERATED_BODY()
+
 	
 public:	
 	// Sets default values for this actor's properties
@@ -29,6 +31,7 @@ public:
 
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "Compoennts")
 	TObjectPtr<UBoxComponent> Box;
+	//UBoxComponent* Box;
 
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "Compoennts")
 	TObjectPtr<UStaticMeshComponent> Body;

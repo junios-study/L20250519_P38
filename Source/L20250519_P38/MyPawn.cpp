@@ -9,6 +9,8 @@
 #include "Components/ArrowComponent.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/FloatingPawnMovement.h"
+#include "MyActor.h"
+#include "Kismet/GameplayStatics.h"
 
 
 // Sets default values
@@ -85,11 +87,59 @@ void AMyPawn::Tick(float DeltaTime)
 
 	AddMovementInput(GetActorForwardVector(), Boost);
 
+	Left->AddLocalRotation(FRotator(0, 0, 7200 * UGameplayStatics::GetWorldDeltaSeconds(GetWorld())));
+	Right->AddLocalRotation(FRotator(0, 0, 7200 * UGameplayStatics::GetWorldDeltaSeconds(GetWorld())));
+
 }
 
 // Called to bind functionality to input
 void AMyPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+
+	PlayerInputComponent->BindAction(TEXT("Fire"), EInputEvent::IE_Pressed, this, &AMyPawn::Fire);
+
+	PlayerInputComponent->BindAction(TEXT("Boost"), EInputEvent::IE_Pressed, this, &AMyPawn::Doboost);
+
+	PlayerInputComponent->BindAction(TEXT("Boost"), EInputEvent::IE_Released, this, &AMyPawn::Unboost);
+
+	PlayerInputComponent->BindAxis(TEXT("Pitch"), this, &AMyPawn::Pitch);
+	PlayerInputComponent->BindAxis(TEXT("Roll"), this, &AMyPawn::Roll);
+
+}
+
+void AMyPawn::Pitch(float Value)
+{
+	AddActorLocalRotation(FRotator(FMath::Clamp(Value, -1.0f, 1.0f) * RotateSpeed * UGameplayStatics::GetWorldDeltaSeconds(GetWorld()),
+		0,
+		0)
+	);
+}
+
+void AMyPawn::Roll(float Value)
+{
+	AddActorLocalRotation(FRotator(0,
+		0,
+		FMath::Clamp(Value, -1.0f, 1.0f) * RotateSpeed * UGameplayStatics::GetWorldDeltaSeconds(GetWorld()))
+	);
+}
+
+void AMyPawn::Fire()
+{
+	//문법 : CDO 포인터를 가르침
+	//의미 : 클래스 이름을 저장하고 싶다. 
+	RocketTemplate = AMyActor::StaticClass();
+	GetWorld()->SpawnActor<AMyActor>(RocketTemplate,
+		Arrow->K2_GetComponentToWorld());
+}
+
+void AMyPawn::Doboost()
+{
+	Boost = 1.0f;
+}
+
+void AMyPawn::Unboost()
+{
+	Boost = 0.5f;
 }
 
