@@ -36,6 +36,8 @@ AMyActor::AMyActor()
 void AMyActor::BeginPlay()
 {
 	Super::BeginPlay();
+
+	SetLifeSpan(3.0f);
 	
 }
 
@@ -44,5 +46,10 @@ void AMyActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+void AMyActor::Test()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Test"));
 }
 

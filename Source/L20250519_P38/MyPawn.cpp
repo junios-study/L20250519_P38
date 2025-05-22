@@ -128,9 +128,8 @@ void AMyPawn::Fire()
 {
 	//문법 : CDO 포인터를 가르침
 	//의미 : 클래스 이름을 저장하고 싶다. 
-	RocketTemplate = AMyActor::StaticClass();
-	GetWorld()->SpawnActor<AMyActor>(RocketTemplate,
-		Arrow->K2_GetComponentToWorld());
+	//RocketTemplate = AMyActor::StaticClass();
+	GetWorld()->SpawnActor<AMyActor>(RocketTemplate, Arrow->K2_GetComponentToWorld());
 }
 
 void AMyPawn::Doboost()

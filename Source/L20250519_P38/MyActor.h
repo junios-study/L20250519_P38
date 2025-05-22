@@ -38,4 +38,8 @@ public:
 
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "Compoennts")
 	TObjectPtr<UProjectileMovementComponent> Movement;
+
+	UFUNCTION(BlueprintCallable)
+	void Test();
+
 };
